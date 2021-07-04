@@ -5,7 +5,9 @@ import org.testng.asserts.SoftAssert;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
+
+
+import Pages.LoginPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -48,63 +50,16 @@ public class LoginTest {
 	
 	@Parameters({"username" , "password"})
 	@Test
-	public void Login(String uname , String pass) {
+	public void LoginTst(String uname , String pass) {
 		
-		test = report.startTest("Login Test Case");
+		LoginPage loginobj = new LoginPage(driver);
+		
+		loginobj.Login(uname, pass);
+		
+		
 		
 					
-		WebElement LoginLink = driver.findElement(By.linkText("Log in"));
-		
-		LoginLink.click();
-		
-		test.log(LogStatus.PASS,"Succesfully clicked on login button");
-		
-		WebElement Username = driver.findElement(By.name("user_login"));
-		
-		Username.sendKeys(uname);
-		
-		test.log(LogStatus.PASS,"Succesfully entered user name");
-		
-		WebElement password = driver.findElement(By.name("user_pwd"));
-		
-		password.sendKeys(pass);
-		
-		test.log(LogStatus.PASS,"Succesfully entered password");
-
-		WebElement RememberMe = driver.findElement(By.className("rememberMe"));
-		
-		RememberMe.click();
-
-		WebElement Login = driver.findElement(By.name("btn_login"));
-		
-		Login.click();
-		
-		test.log(LogStatus.PASS,"Succesfully clicked on login link");
-		
-		WebElement Error = driver.findElement(By.id("msg_box"));
-		
-		String ActMsg = Error.getText();		
-		String ExpMsg = "The email or password you have entered is invalid.";
-		
-				
-		Assert.assertTrue(Error.isDisplayed());
-		
-		soft.assertEquals(ActMsg,  ExpMsg);
-		
-		System.out.println("After soft assertion");
-		
-	
-	/*	try {
-			Assert.assertEquals(ActMsg , ExpMsg);
-			test.log(LogStatus.PASS,"Actual message And Expected Message matches");
-		}
-		catch(Throwable e) {
-			test.log(LogStatus.FAIL,"Actual message And Expected Message does not matches");
-		}
-		*/
-	}
-		
-		
+	}		
 		@AfterMethod
 		public void teardown() {
 								
